@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/olilogo.png';
+const navLinks = [
+  { link: "/convocatoria", label: "Convocatoria" },
+  { link: "/recursos",     label: "Recursos" },
+  { link: "/resultados",   label: "Resultados" },
+  { link: "/nosotros",     label: "Nosotros" },
+];
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<div class="bar"></div>
+<nav aria-label="Navegación principal">
+  <a href="/" class:list={[{ active: currentPath === "/" }]} aria-label="Olimpiada Potosina de Física">
+    <Image src={logo} alt="OPF" loading="eager" />
+  </a>
+
+  <!-- Botón hamburguesa (solo mobile) -->
+  <button id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div id="nav-links">
+    {navLinks.map(({ link, label }) => (
+      <a href={link} class:list={[{ active: currentPath === link }]}>
+        {label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  import { animate } from "motion";
+
+  const activeLink = document.querySelector("a.active");
+  if (activeLink) {
+    animate(activeLink, { scaleY: [0, 1.1, 1] }, { duration: 0.5 });
+  }
+
+  // Hamburguesa
+  const toggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = navLinks?.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+</script>
+
+<style>
+  nav {
+    padding: 0.5rem 5rem 0rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 70px;
+    position: relative;
+  }
+
+  a {
+    position: relative;
+    text-decoration: none;
+    font-size: 1.3em;
+    margin-left: 1em;
+    letter-spacing: 0.05em;
+    color: var(--negro);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  a.active {
+    transform-origin: top center;
+    margin-top: -16px;
+    z-index: 101;
+    padding: 8px 0.6rem 0;
+    background:
+      linear-gradient(var(--crema), var(--crema)) padding-box,
+      linear-gradient(var(--naranja), var(--naranja)) border-box;
+    border: 8px solid transparent;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+  }
+
+  img { width: 50px; height: auto; }
+
+  .bar {
+    position: sticky;
+    top: 0;
+    height: 8px;
+    z-index: 100;
+    background: var(--naranja);
+  }
+
+  /* Hamburguesa — oculto en desktop */
+  #menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 200;
+  }
+  #menu-toggle span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--negro);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* Links en desktop: fila normal */
+  #nav-links {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      padding: 0.5rem 1rem 0;
+      flex-wrap: wrap;
+      height: auto;
+      min-height: 60px;
+      align-items: center;
+    }
+
+    #menu-toggle {
+      display: flex;
+    }
+
+    /* Menú desplegable */
+    #nav-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: var(--crema);
+      border-top: 2px solid var(--naranja);
+      padding: 0.5rem 0 1rem;
+      gap: 0;
+    }
+
+    #nav-links.open {
+      display: flex;
+    }
+
+    #nav-links a {
+      font-size: 1.2em;
+      padding: 0.6rem 1rem;
+      margin-top: 0 !important; /* cancela el active tab en mobile */
+      border-radius: 8px;
+    }
+
+    /* En mobile el tab activo se muestra como fondo simple */
+    #nav-links a.active {
+      margin-top: 0;
+      background: var(--naranja);
+      color: var(--crema);
+      border: none;
+      padding: 0.6rem 1rem;
+    }
+  }
+</style>

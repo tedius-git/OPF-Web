@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import facebook from '../assets/facebook.svg';
+import gmail from '../assets/gmail.svg';
+import youtube from '../assets/youtube.svg';
+const footerLinks = [
+  { link: "mailto:omfslp@gmail.com", icon: gmail },
+  { link: "https://www.facebook.com/omfslp", icon: facebook },
+  { link: "https://www.youtube.com/@olimpiadadefisicaslp4634", icon: youtube },
+];
+---
+<footer>
+  <div class:list={["footer-tab"]}>
+    <ul>
+      {footerLinks.map(({ link, icon }) => (
+      <li>
+          <a href={link} class:list={["motion-hover"]}>
+              <Image src={icon} alt={link} loading="eager" />
+          </a>
+      </li>
+      ))}
+    </ul>
+    <p>Olimpiada Potosina de Fisica</p>
+  </div>
+</footer>
+<div class="bar"></div>
+
+<style>
+  footer {
+    z-index: 101;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -8px;
+  }
+
+  .footer-tab {
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--crema);
+    border: 8px solid var(--azul);
+    border-bottom: none;
+    border-radius: 12px 12px 0px 0px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
+  img {
+    width: 20px;
+    height: auto;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .bar {
+    z-index: 100;
+    position: sticky;
+    bottom: 0;
+    height: 8px;
+    background: var(--azul);
+  }
+
+  @media (max-width: 600px) {
+    .footer-tab {
+        padding: 1em;
+    }
+    img {
+      width: 15px;
+      height: auto;
+    }
+  }
+</style>

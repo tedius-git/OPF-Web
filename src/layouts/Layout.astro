@@ -1,0 +1,79 @@
+---
+import { Font } from "astro:assets";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Formulas from "../components/Formulas.astro";
+
+interface Props {
+  formulas?: boolean;
+}
+const { formulas = true } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <Font cssVariable="--font-new-cm" />
+    <title>OPF</title>
+  </head>
+  <body>
+    <Nav />
+    {formulas && <Formulas />}
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+  <script>
+  import { animate, hover } from "motion"
+
+  hover(".motion-hover", (element) => {
+      animate(element, { scale: 1.5 })
+
+      return () => animate(element, { scale: 1 })
+  })
+  </script>
+  <style is:global>
+    :root {
+      --naranja: #B85025;
+      --verde: #2A5C35;
+      --azul-uaslp: #23498C;
+      --azul: #1F6BED;
+      --dorado: #C8960C;
+      --crema: #F7F5EF;
+      --negro: #1A1A1A;
+      --gris: #DEDAD4;
+    }
+
+    body {
+      background-color: var(--crema);
+      color: var(--negro);
+      font-family: var(--font-new-cm), Georgia, serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+    }
+
+    .motion-hover {
+      display: inline-block
+    }
+
+    main {
+      margin: 1em;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    hr {
+      border: none;
+      border-top: 0.6px solid var(--gris);
+      margin: 0.7em 0;
+    }
+  </style>
+</html>
