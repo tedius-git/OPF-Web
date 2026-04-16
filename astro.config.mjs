@@ -3,6 +3,8 @@ import { defineConfig , fontProviders, passthroughImageService } from 'astro/con
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://astronaut.github.io',
+  base: '/OPF-Web',
   fonts: [{
     provider: fontProviders.local(),
     name: "NewCM",
