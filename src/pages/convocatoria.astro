@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import qr from '../assets/qr-code.png';
 ---
 <Layout>
   <main class="grid-convocatoria">
-    
     <div class="columna-izquierda">
       <section class="seccion-borde verde">
         <h3 class="titulo">PARTICIPA</h3>
@@ -30,8 +31,8 @@ import Layout from '../layouts/Layout.astro';
          <p class="texto-qr">
       Al registrarte <strong>ten a la mano</strong> tu constancia de estudios vigente 
       (ciclo escolar 2023-2024), en formato PDF.
-      </p>
-      <img src="/qr-code.png.png" alt="Código QR de inscripción" class="imagen-qr" />
+         </p>
+         <Image src={qr} alt="codigo-qr" />
        </div>
       </section>
       
@@ -58,6 +59,7 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
+    img {width: 200px; height: auto;}
   /* Estilo de las columnas */
   .grid-convocatoria {
     display: grid;
