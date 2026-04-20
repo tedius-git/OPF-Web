@@ -27,7 +27,7 @@ interface Participante {
   cal: number;
 }
 
-const ParticipantesOrdenados = [...RawCal].sort((a, b) => b.cal - a.cal);
+const ParticipantesOrdenados: Participante[] = [...RawCal].sort((a, b) => b.cal - a.cal);
 
 const Medallas = [Oro, Plata, Bronce];
 const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
