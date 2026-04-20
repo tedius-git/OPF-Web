@@ -1,21 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Acá van los puestos chingones
-const ganadores = [
-  { puesto: "1er Lugar", nombre: "[Pendiente]", escuela: "[Pendiente]", medalla: "https://file.garden/aePYyTdpTQfC0KX_/OPFGold.png" },
-  { puesto: "2do Lugar", nombre: "[Pendiente]", escuela: "[Pendiente]", medalla: "https://file.garden/aePYyTdpTQfC0KX_/OPFSilver.png" },
-  { puesto: "3er Lugar", nombre: "[Pendiente]", escuela: "[Pendiente]", medalla: "https://file.garden/aePYyTdpTQfC0KX_/OPFBronze.png" }
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSS80-GOI4CzYSU93h6tAARle7NjcbZGz-YVuArz2rElPvsSj8AsDzTKwqrDy1VhsYyf7TSoKIpIDaK/pub?gid=0&single=true&output=csv';
+
+const response = await fetch(SHEET_URL);
+const csvContent = await response.text();
+
+const RawCal = parse(csvContent, {
+  columns: true,
+  skip_empty_lines: true,
+  cast: true 
+});
+
+// CAMBIAR A TRUE PARA PUBLICAR RESULTADOS
+const resultadosPublicados = false;
+
+interface Participante {
+  folio: string;
+  nombre: string;
+  escuela: string;
+  cal: number;
+}
+
+const ParticipantesOrdenados = [...RawCal].sort((a, b) => b.cal - a.cal);
+
+const Medallas = [
+  "https://file.garden/aePYyTdpTQfC0KX_/OPFGold.png",
+  "https://file.garden/aePYyTdpTQfC0KX_/OPFSilver.png",
+  "https://file.garden/aePYyTdpTQfC0KX_/OPFBronze.png"
 ];
 
-// Acá va el resto cfff
-const resultadosGenerales = [
-  { posicion: 4, folio: "[Pendiente]", escuela: "[Pendiente]", resultado: "[Pendiente]" },
-  { posicion: 5, folio: "[Pendiente]", escuela: "[Pendiente]", resultado: "[Pendiente]" },
-  { posicion: 6, folio: "[Pendiente]", escuela: "[Pendiente]", resultado: "[Pendiente]" },
-  { posicion: 7, folio: "[Pendiente]", escuela: "[Pendiente]", resultado: "[Pendiente]" },
-  { posicion: 8, folio: "[Pendiente]", escuela: "[Pendiente]", resultado: "[Pendiente]" }
-];
+const podiog = ParticipantesOrdenados.slice(0, 3).map((alumno, index) => ({
+  puesto: NPodio[index],
+  nombre: alumno.nombre,
+  escuela: alumno.escuela,
+  medalla: Medallas[index]
+}));
+
+const GRes = ParticipantesOrdenados.slice(3).map((alumno, index) => ({
+  posicion: index + 4,
+  folio: alumno.folio,
+  escuela: alumno.escuela,
+  resultado: alumno.cal}));
 ---
 
 <Layout>
