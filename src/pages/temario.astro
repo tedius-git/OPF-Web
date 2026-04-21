@@ -1,0 +1,247 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const temas = [
+  {
+    area: "Trigonometría",
+    descripcion: "Estudio de las relaciones entre los lados y ángulos de los triángulos.",
+    subtemas: ["Triángulos Rectángulos", "Razones Trigonométricas", "Identidades Pitagóricas", "Círculo Unitario y Radianes", "Leyes de Senos y Cosenos"]
+  },
+  {
+    area: "Geometría Analítica",
+    descripcion: "Líneas, parábolas y todas las figuras geométricas descritas a través de ecuaciones algebraicas.",
+    subtemas: ["El Plano y Parejas Ordenadas", "Distancia entre dos puntos", "La Recta", "Las Cónicas (Circunferencia, Elipse, Parábola, Hipérbola)"]
+  },
+  {
+    area: "Vectores",
+    descripcion: "Cantidades que poseen magnitud y dirección, que explican fuerzas y trayectorias.",
+    subtemas: ["Diferencia entre Vector y Escalar", "Suma y Resta Vectorial", "Componentes Geométricos y Analíticos"]
+  },
+  {
+    area: "Cinemática",
+    descripcion: "El estudio del movimiento puro sin importar qué lo causa.",
+    subtemas: ["Posición, Velocidad y Aceleración", "Caída Libre", "Tiro Parabólico", "MRU y MRUA"]
+  },
+  {
+    area: "Energía",
+    descripcion: "Trabajo, energía y potencia. Un enfoque alternativo (y a veces más sencillo) para resolver sistemas físicos.",
+    subtemas: ["Trabajo Mecánico", "Energía Cinética", "Energía Potencial (Gravitacional y Elástica)", "Conservación de la Energía", "Potencia Mecánica y Eficiencia"]
+  },
+  {
+    area: "Mecánica de Fluidos",
+    descripcion: "El estudio del equilibrio y movimiento de sustancias que se deforman, como líquidos y gases.",
+    subtemas: ["Propiedades: Densidad, Viscosidad y Presión", "Ecuación de Continuidad", "Principio de Pascal", "Ecuación de Bernoulli", "Principio de Arquímedes"]
+  },
+  {
+    area: "Electromagnetismo",
+    descripcion: "La interacción fundamental entre las cargas eléctricas, los voltajes y los campos magnéticos.",
+    subtemas: ["Carga y Ley de Coulomb", "Campo Eléctrico", "Potencial Eléctrico y Voltaje", "Magnetismo", "Ley de Faraday (Inducción)"]
+  },
+  {
+    area: "Termodinámica",
+    descripcion: "Estudio del intercambio de la energía y la temperatura.",
+    subtemas: ["Calor y Temperatura", "Modelo de Gas Ideal", "Variables de Estado", "Las 4 Leyes de la Termodinámica"]
+  }
+];
+---
+
+<Layout formulas={true}>
+  <main class="contenedor-temario">
+    
+    <header class="cabecera motion-fadein">
+      <h1 class="titulo">Temario</h1>
+      <p class="subtitulo">Conoce los conceptos y áreas de estudio que podrían conforman el Examen Selectivo Estatal.</p>
+      <hr />
+    </header>
+
+    <section class="grid-temas motion-fadein">
+      {temas.map((bloque) => (
+        <div class="tarjeta-tema">
+          <div class="cabecera-tarjeta">
+            <h2>{bloque.area}</h2>
+          </div>
+          <p class="descripcion-tema">{bloque.descripcion}</p>
+          
+          <ul class="lista-subtemas">
+            {bloque.subtemas.map((subtema) => (
+              <li>{subtema}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <div class="nota-descarga motion-fadein">
+      <div class="texto-descarga">
+        <h3>¿Prefieres estudiarlo sin conexión?</h3>
+        <p>Descarga el documento completo</p>
+      </div>
+      <a href="/Temario.pdf" target="_blank" class="btn-descarga">Descargar Temario en PDF &darr;</a>
+    </div>
+
+  </main>
+</Layout>
+
+<script>
+  import { animate, inView } from "motion"
+  
+  inView(".motion-fadein", (element) => {
+    animate(
+      element,
+      { opacity: [0, 1], y: [15, 0] },
+      { duration: 0.5, easing: [0.22, 1, 0.36, 1] }
+    )
+  })
+</script>
+
+<style>
+  .contenedor-temario {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  /* === Cabecera === */
+  .cabecera {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .titulo {
+    font-size: 3rem;
+    color: var(--azul-uaslp);
+    margin-bottom: 0.5rem;
+  }
+  .subtitulo {
+    color: var(--naranja);
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  /* === Temas === */
+  .grid-temas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 6rem;
+  }
+
+  .tarjeta-tema {
+    background-color: #ffffff;
+    border: 1px solid var(--gris);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cabecera-tarjeta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .icono {
+    font-size: 2.2rem;
+  }
+
+  .tarjeta-tema h2 {
+    color: var(--azul-uaslp);
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  /* Estilo para la nueva síntesis */
+  .descripcion-tema {
+    color: var(--negro);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gris);
+    font-style: italic;
+  }
+
+  .lista-subtemas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .lista-subtemas li {
+    color: var(--negro);
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.3;
+    font-size: 0.95rem;
+  }
+
+  .lista-subtemas li::before {
+    content: "•";
+    color: var(--dorado);
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -5px;
+  }
+
+  /* === Zona de Descarga === */
+  .nota-descarga {
+    background-color: var(--crema);
+    border: 2px dashed var(--dorado);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .texto-descarga {
+    flex: 1 1 400px;
+  }
+
+  .texto-descarga h3 {
+    color: var(--azul-uaslp);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .btn-descarga {
+    background-color: var(--naranja);
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  /* Ajustes cfff */
+  @media (max-width: 768px) {
+    .nota-descarga {
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .texto-descarga {
+      flex: none;
+      width: 100%;
+    }
+
+    .btn-descarga {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
