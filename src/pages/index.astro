@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Etiqueta from '../components/Etiqueta.astro';
+import Boton1 from '../components/Boton1.astro';
+import Tarjeta1 from '../components/Tarjeta1.astro';
 ---
 
 <Layout formulas={false}>
@@ -33,24 +35,24 @@ import Etiqueta from '../components/Etiqueta.astro';
       <h2 class="centrado">Fechas Importantes</h2>
       <div class="grid-fechas">
         
-        <div class="tarjeta-fecha">
+        <Tarjeta1 class="tarjeta-fecha">
           <h3>Cierre de Inscripciones</h3>
           <p class="fecha-texto">[Pendiente]</p>
-        </div>
+        </Tarjeta1>
 
 
         <! -- Ejemplo de fecha, pegar las etiquetas faltantes a las otras si quieren cfff -->
-        <div class="tarjeta-fecha destacada motion-hover">
+        <Tarjeta1 class="tarjeta-fecha destacada motion-hover">
           <div class="etiqueta-alerta">¡Próximamente!</div>
           <h3>Examen Selectivo Estatal</h3>
           <p class="fecha-texto principal">02 / 05 / 2026</p>
           <p class="hora-texto">10:00 a.m.</p>
-        </div>
+        </Tarjeta1>
 
-        <div class="tarjeta-fecha">
+        <Tarjeta1 class="tarjeta-fecha">
           <h3>Inicio de Entrenamientos</h3>
           <p class="fecha-texto">[Pendiente]</p>
-        </div>
+        </Tarjeta1>
 
       </div>
     </div>
@@ -63,8 +65,8 @@ import Etiqueta from '../components/Etiqueta.astro';
         <p>No importa si es tu primera vez participando. Ponemos a tu disposición material de estudio, el temario oficial y exámenes de años anteriores para que llegues con la mejor preparación.</p>
       </div>
       <div class="recursos-enlaces">
-        <a href="/temario" class="enlace-caja">Ver Temario Oficial &rarr;</a>
-        <a href="/material" class="enlace-caja">Exámenes Anteriores &rarr;</a>
+        <Boton1 href="/temario" class="enlace-caja">Ver Temario Oficial &rarr;</Boton1>
+        <Boton1 href="/material" class="enlace-caja">Exámenes Anteriores &rarr;</Boton1>
       </div>
     </div>
   </section>
@@ -154,14 +156,10 @@ import Etiqueta from '../components/Etiqueta.astro';
     margin-top: 3rem;
   }
   .tarjeta-fecha {
-    background-color: #ffffff;
-    border: 1px solid var(--gris);
-    border-radius: 12px;
-    padding: 2rem;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     position: relative;
   }
+
   .tarjeta-fecha.destacada {
     border: 2px solid var(--naranja);
     box-shadow: 0 8px 20px rgba(184, 80, 37, 0.15);
@@ -232,22 +230,6 @@ import Etiqueta from '../components/Etiqueta.astro';
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-  .enlace-caja {
-    display: block;
-    background-color: var(--naranja);
-    color: var(--crema);
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    border: 1px solid rgb(115, 52, 0);
-    transition: all 0.3s ease;
-  }
-  .enlace-caja:hover {
-    background-color: var(--dorado);
-    border-color: var(--dorado);
-    transform: translateX(5px);
   }
 
   @media (max-width: 640px) {
