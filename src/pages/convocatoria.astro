@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Seccion from '../components/Seccion.astro';
 import { Image } from 'astro:assets';
 import qr from '../assets/qr-code.png';
 ---
 <Layout>
   <main class="grid-convocatoria">
     <div class="columna-izquierda">
-      <section class="seccion-borde verde">
-        <h3 class="titulo">PARTICIPA</h3>
+      <Seccion titulo="Participa" acento="verde">
         <p class="descripcion">
           Se aplicará un examen selectivo en modalidad <strong>presencial</strong> en la 
           <strong>Facultad de Ciencias</strong> campus pedregal de la UASLP a todas las personas
@@ -21,10 +21,9 @@ import qr from '../assets/qr-code.png';
           </div>
         </div>
         <p class="nota">Para entidades fuera de la capital favor de contactar a un asesor.</p>
-      </section>
+      </Seccion>
 
-      <section class="seccion-borde naranja">
-        <h3 class="titulo">INSCRÍBETE</h3>
+      <Seccion titulo="Inscríbete" acento="naranja">
         <p>Regístrate usando el siguiente formulario:</p>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSflTn_NNWJ7HysPiwiGD6nd9SbzhUTZOJUWtm1ywdAX-19TFg/viewform" class="link">https://forms.gle/Jh9qiGiP3qfuQcAw9</a>
         <div class="contenedor-qr">
@@ -34,13 +33,12 @@ import qr from '../assets/qr-code.png';
          </p>
          <Image src={qr} alt="codigo-qr" />
        </div>
-      </section>
+      </Seccion>
       
     </div>
 
     <div class="columna-derecha">
-      <section class="seccion-borde negro">
-        <h3 class="titulo">BASES</h3>
+      <Seccion titulo="Bases" acento="negro">
         <ol class="lista-bases">
           <li><span>(1)</span>Estar inscrito en alguna institución de educación secundaria o
         bachillerato incorporada al plan de estudios vigente del estado de
@@ -52,7 +50,7 @@ import qr from '../assets/qr-code.png';
         institución de procedencia y una <strong>constancia</strong> que avale el nivel
         de estudio que cursa o su credencial escolar. </li>
         </ol>
-      </section>
+      </Seccion>
     </div>
 
   </main>
@@ -66,30 +64,8 @@ import qr from '../assets/qr-code.png';
     grid-template-columns: 1.2fr 1fr; 
     max-width: 1000px;
     margin: 50px auto;
-    font-family: 'Times New Roman', serif;
     padding: 30px;
   }
-
-  /* Estilo base para las secciones con línea lateral */
-  .seccion-borde {
-    padding-left: 20px;
-    margin-bottom: 30px;
-    border-left: 6px solid;
-  }
-
-  /* Colores de las líneas */
-  .verde { border-left-color: var(--verde); }
-  .naranja { border-left-color: var(--naranja); }
-  .negro { border-left-color: var(--negro); }
-
-  .titulo {
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-  }
-
-  .verde .titulo { color: var(--verde); }
-  .naranja .titulo { color: var(--naranja); }
 
   /* Ajustes para la tarjeta de fecha */
   .tarjeta-crema {
