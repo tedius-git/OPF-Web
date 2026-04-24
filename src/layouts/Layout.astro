@@ -9,9 +9,9 @@ import { colores } from "../config/colores";
 
 interface Props {
   formulas?: boolean;
+  title?: string;
 }
-
-const { formulas = true } = Astro.props;
+const { formulas = true, title = "OPF" } = Astro.props;
 ---
 
 <!doctype html>
