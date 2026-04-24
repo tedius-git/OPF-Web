@@ -1,0 +1,65 @@
+---
+// src/pages/404.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 - No encontrado">
+  <main class="error-container">
+    <div class="content">
+      <h1 class="error-code">404</h1>
+      <p class="error-message">
+        Parece que la pagina no existe.
+      </p>
+      <a href="/" class="back-link">Volver al inicio</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  
+  
+  .error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+  }
+
+  .content {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .error-code {
+    font-size: 10rem;
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(to right, var(--naranja), var(--dorado));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+
+  .error-message {
+    font-size: 1.5rem;
+    color: #4b5563;
+    margin: 1.5rem 0 2rem;
+    max-width: 400px;
+  }
+
+  .back-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #1e40af;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+  }
+
+  .back-link:hover {
+    transform: scale(1.05);
+    background-color: var(--naranja);
+  }
+</style>
