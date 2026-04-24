@@ -1,143 +1,131 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { parse } from 'csv-parse/browser/esm/sync';
-import { Image } from 'astro:assets';
-import Oro from '../assets/medallas/OPFOro.png';
-import Plata from '../assets/medallas/OPFPlata.png';
-import Bronce from '../assets/medallas/OPFBronce.png';
+import Layout from "../layouts/Layout.astro";
+import { parse } from "csv-parse/browser/esm/sync";
+import { Image } from "astro:assets";
+import Tarjeta from "../components/Tarjeta.astro";
+import Oro from "../assets/medallas/OPFOro.png";
+import Plata from "../assets/medallas/OPFPlata.png";
+import Bronce from "../assets/medallas/OPFBronce.png";
 
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSS80-GOI4CzYSU93h6tAARle7NjcbZGz-YVuArz2rElPvsSj8AsDzTKwqrDy1VhsYyf7TSoKIpIDaK/pub?gid=0&single=true&output=csv';
+const SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSS80-GOI4CzYSU93h6tAARle7NjcbZGz-YVuArz2rElPvsSj8AsDzTKwqrDy1VhsYyf7TSoKIpIDaK/pub?gid=0&single=true&output=csv";
 
 // CAMBIAR A TRUE PARA PUBLICAR RESULTADOS
 const resultadosPublicados = false;
 
 interface Participante {
-  folio: string;
   nombre: string;
   escuela: string;
   cal: number;
 }
 
+let podiog: any[] = [];
+let GRes: any[] = [];
+const Medallas = [Oro, Plata, Bronce];
+const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
+
 if (resultadosPublicados) {
-  const response = await fetch(SHEET_URL);
-  const csvContent = await response.text();
+  try {
+    const response = await fetch(SHEET_URL);
+    const csvContent = await response.text();
 
-  const RawCal = parse(csvContent, {
-    columns: true,
-    skip_empty_lines: true,
-    cast: true
-  });
+    const RawCal = parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+      cast: true,
+    });
 
-  const ParticipantesOrdenados = [...RawCal].sort((a, b) => b.cal - a.cal);
+    const ParticipantesOrdenados = [...RawCal].sort((a, b) => b.cal - a.cal);
 
-  podiog = ParticipantesOrdenados.slice(0, 3).map((participante, index) => ({
-    puesto: NPodio[index],
-    nombre: participante.nombre,
-    escuela: participante.escuela,
-    medalla: Medallas[index]
-  }));
+    podiog = ParticipantesOrdenados.slice(0, 3).map((participante, index) => ({
+      puesto: NPodio[index],
+      nombre: participante.nombre,
+      escuela: participante.escuela,
+      medalla: Medallas[index],
+    }));
 
-  GRes = ParticipantesOrdenados.slice(3).map((participante, index) => ({
-    posicion: index + 4,
-    folio: participante.folio,
-    escuela: participante.escuela,
-    resultado: participante.cal
-  }));
+    GRes = ParticipantesOrdenados.slice(3).map((participante, index) => ({
+      posicion: index + 4,
+      nombre: participante.nombre,
+      escuela: participante.escuela,
+    }));
+  } catch (error) {
+    console.error("Error al cargar los resultados:", error); //Por si las dudas, ya luego lo reparan
+  }
 }
 ---
 
 <Layout>
   <main class="contenedor-resultados">
     <h1 class="titulo">Resultados de la Olimpiada</h1>
-    
-    {resultadosPublicados ? (
-      <>
-        <p class="subtitulo">Conoce a los perfiles destacados de esta edición.</p>
 
-        <section class="podio">
-          {podiog.map((participante) => (
-            <div class="tarjeta motion-hover">
-              <div class="medalla">
-                <Image src={participante.medalla} alt={`Medalla de ${participante.puesto}`} />
-              </div>
-              <h2>{participante.nombre}</h2>
-              <hr />
-              <p class="escuela">{participante.escuela}</p>
-            </div>
-          ))}
-        </section>
+    {
+      resultadosPublicados ? (
+        <>
+          <p class="subtitulo">
+            Conoce a los perfiles destacados de esta edición.
+          </p>
 
-        <section class="seccion-tabla">
-          <h2 class="subtitulo-tabla">Tabla General de Posiciones</h2>
-          
-          <div class="tabla-responsiva">
-            <table class="tabla-resultados">
-              <thead>
-                <tr>
-                  <th>Posición</th>
-                  <th>Folio</th>
-                  <th>Escuela</th>
-                  <th>Resultado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {GRes.map((alumno) => (
+          <section class="podio">
+            {podiog.map((participante) => (
+              <Tarjeta hover={true}>
+                <div class="medalla">
+                  <Image
+                    src={participante.medalla}
+                    alt={`Medalla de ${participante.puesto}`}
+                  />
+                </div>
+                <h2>{participante.nombre}</h2>
+                <hr />
+                <p class="escuela">{participante.escuela}</p>
+                <p class="puesto-texto">{participante.puesto}</p>
+              </Tarjeta>
+            ))}
+          </section>
+
+          <section class="seccion-tabla">
+            <h2 class="subtitulo-tabla">Tabla General de Posiciones</h2>
+
+            <div class="tabla-responsiva">
+              <table class="tabla-resultados">
+                <thead>
                   <tr>
-                    <td><strong>{alumno.posicion}</strong></td>
-                    <td>{alumno.folio}</td>
-                    <td>{alumno.escuela}</td>
-                    <td>{alumno.resultado}</td>
+                    <th>Posición</th>
+                    <th>Nombre</th>
+                    <th>Escuela</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </>
-    ) : (
-      /* --- VISTA DE ESPERA (Si es FALSE) --- */
-      <section class="proximamente">
-        <div class="icono-espera motion-hover">⏳</div>
-        <h2 class="titulo-espera">¡Próximamente!</h2>
-        <p class="texto-espera">Estamos afinando los últimos detalles y calculando los puntajes. Vuelve pronto para conocer a los ganadores de esta edición.</p>
-      </section>
-    )}
-
+                </thead>
+                <tbody>
+                  {GRes.map((alumno) => (
+                    <tr>
+                      <td>
+                        <strong>{alumno.posicion}</strong>
+                      </td>
+                      <td>{alumno.nombre}</td>
+                      <td>{alumno.escuela}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </>
+      ) : (
+        /* --- VISTA DE ESPERA (Si es FALSE) --- */
+        <Tarjeta class="proximamente">
+          <div class="icono-espera">⏳</div>
+          <h2 class="titulo-espera">¡Próximamente!</h2>
+          <p class="texto-espera">
+            Estamos afinando los últimos detalles y calculando los puntajes.
+            Vuelve pronto para conocer a los ganadores de esta edición.
+          </p>
+        </Tarjeta>
+      )
+    }
   </main>
 </Layout>
 
 <style>
-/* ==== PRÓXIMAMENTE ==== */
-.proximamente {
-    background-color: var(--crema);
-    padding: 5rem 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    border: 1px solid var(--gris);
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .icono-espera {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-  }
-
-  .titulo-espera {
-    color: var(--azul-uaslp);
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .texto-espera {
-    color: var(--negro);
-    font-size: 1.2rem;
-    max-width: 600px;
-    line-height: 1.5;
-  }
-/* ===================== */
   .contenedor-resultados {
     max-width: 900px;
     margin: 0 auto;
@@ -147,12 +135,11 @@ if (resultadosPublicados) {
 
   .titulo {
     font-size: 2.8rem;
-    color: var(--azul-uaslp);
+    color: var(--azulUaslp);
     margin-bottom: 0.5rem;
   }
 
   .subtitulo {
-    color: var(--naranja);
     font-size: 1.2rem;
   }
 
@@ -164,57 +151,48 @@ if (resultadosPublicados) {
     margin-bottom: 4rem;
   }
 
-  .tarjeta {
-    background-color: var(--crema);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    border: 1px solid var(--gris);
-    display: inline-block; 
-    cursor: pointer;
-    flex: 1; 
-  }
-
-  .tarjeta h2 {
-    color: var(--negro);
-    margin-bottom: 0.5rem;
-  }
-
   .escuela {
     color: var(--verde);
     font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  .puesto-texto {
+    color: var(--dorado);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
   }
 
   .medalla {
-    font-size: 2.5rem;
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
   }
 
   .medalla img {
-    width: 66px;
+    width: 80px;
     height: auto;
-    object-fit: contain;
   }
 
   .seccion-tabla {
     text-align: left;
+    margin-top: 4rem;
   }
 
   .subtitulo-tabla {
     font-size: 1.8rem;
-    color: var(--azul-uaslp);
-    margin-bottom: 1.5rem;
+    color: var(--naranja);
+    margin-bottom: 2rem;
     text-align: center;
   }
 
   .tabla-responsiva {
     overflow-x: auto;
-    background-color: var(--crema);
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     border: 1px solid var(--gris);
+    background: #fff;
   }
 
   .tabla-resultados {
@@ -224,17 +202,41 @@ if (resultadosPublicados) {
 
   .tabla-resultados th,
   .tabla-resultados td {
-    padding: 1.2rem 1rem;
+    padding: 1.2rem;
     border-bottom: 1px solid var(--gris);
   }
 
   .tabla-resultados th {
-    background-color: var(--azul-uaslp);
-    color: var(--crema);
-    font-weight: 600;
+    background-color: var(--naranja);
+    color: #fff;
+    text-align: left;
   }
 
   .tabla-resultados tbody tr:hover {
     background-color: var(--crema);
+  }
+
+  .proximamente {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 2rem;
+  }
+
+  .icono-espera {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .titulo-espera {
+    color: var(--negro);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .texto-espera {
+    font-size: 1.2rem;
+    line-height: 1.6;
   }
 </style>

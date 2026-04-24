@@ -150,6 +150,8 @@ Para trabajar en el proyecto ten a la mano la siguiente tabla de commandos:
 | `npm run preview`         | vista preview del sito de forma local            |
 | `npm run astro ...`       | CLI comandos como `astro add`, `astro check`     |
 | `npm run astro -- --help` | obtener ayuda con la CLI de Astro                |
+| `npm run fmt:check`       | utiliza prettier para revisar formato            |
+| `npm run fmt:write`       | ejecuta prettier para dar formato a los archivos |
 
 Asi como [la documentacion de astro](https://docs.astro.build)
  

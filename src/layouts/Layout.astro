@@ -11,9 +11,10 @@ interface Props {
   formulas?: boolean;
   title?: string;
 }
- 
 const { formulas = true, title = "OPF" } = Astro.props;
+const { formulas = true } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -32,15 +33,14 @@ const { formulas = true, title = "OPF" } = Astro.props;
       <slot />
     </main>
     <Footer />
-  </body>
-  <script>
-  import { animate, hover } from "motion"
+  </body><script>
+    import { animate, hover } from "motion";
 
-  hover(".motion-hover", (element) => {
-      animate(element, { scale: 1.5 })
+    hover(".motion-hover", (element) => {
+      animate(element, { scale: 1.5 });
 
-      return () => animate(element, { scale: 1 })
-  })
+      return () => animate(element, { scale: 1 });
+    });
   </script>
   <style define:vars={{ ...colores }} is:global>
     body {
@@ -54,7 +54,7 @@ const { formulas = true, title = "OPF" } = Astro.props;
     }
 
     .motion-hover {
-      display: inline-block
+      display: inline-block;
     }
 
     main {
