@@ -12,17 +12,17 @@ const footerLinks = [
 
 <footer>
   <div class:list={["footer-tab"]}>
-    <ul>
+    <section>
       {
         footerLinks.map(({ link, icon }) => (
-          <li>
+          <span>
             <a href={link} class:list={["motion-hover"]}>
               <Image src={icon} alt={link} loading="lazy" />
             </a>
-          </li>
+          </span>
         ))
       }
-    </ul>
+    </section>
     <p>Olimpiada Potosina de Física</p>
   </div>
 </footer>
@@ -51,8 +51,7 @@ const footerLinks = [
     border-radius: 12px 12px 0px 0px;
   }
 
-  ul {
-    list-style: none;
+  section {
     padding: 0;
     margin: 0;
     display: flex;

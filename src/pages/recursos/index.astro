@@ -29,7 +29,7 @@ const todosRecursos = todosAstros.flatMap(([ruta, archivo]) => {
 <Layout>
   {
     todosRecursos.map(({ ruta, titulo, descripcion }) => (
-      <a href={ruta}>
+      <a href={ruta} class="">
         <Tarjeta>
           <h2>{titulo}</h2>
           <p>{descripcion}</p>
@@ -47,5 +47,9 @@ const todosRecursos = todosAstros.flatMap(([ruta, archivo]) => {
      * */
     color: var(--colorTexto);
     text-decoration: none;
+  }
+
+  a {
+    padding: 2em;
   }
 </style>

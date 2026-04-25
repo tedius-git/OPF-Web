@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Etiqueta from "../../components/Etiqueta.astro";
+import Seccion from "../../components/Seccion.astro";
+import Tarjeta from "../../components/Tarjeta.astro";
+
+export const titulo = "Exámenes Selectivos Pasados";
+export const descripcion =
+  "Aquí encontrarás los exámenes selectivos de ediciones anteriores de la Olimpiada Potosina de Física. Estudiarlos es una de las formas más efectivas de prepararte, ya que te permiten familiarizarte con el formato, el nivel de dificultad y los temas que se evalúan.";
+---
+
+<Layout>
+  <div class="container">
+    <h1 class="motion-fadein">{titulo}</h1>
+
+    <Seccion titulo="Un vistazo al pasado" acento="verde">
+      <p>{descripcion}</p>
+    </Seccion>
+
+    <div class="cards motion-fadein">
+      <Tarjeta titulo="2025" acento="azul">
+        <div class="card-content">
+          <p>Exámenes del proceso selectivo de la edición 2025.</p>
+          <div class="botones">
+            <Etiqueta
+              href="/1er-Selectivo-OPF-2025.pdf"
+              target="_blank"
+              colorFondo="azul"
+              download
+            >
+              Primer Selectivo
+            </Etiqueta>
+            <Etiqueta
+              href="/2ndo-Selectivo-OPF-2025.pdf"
+              target="_blank"
+              colorFondo="azul"
+              download
+            >
+              Segundo Selectivo
+            </Etiqueta>
+          </div>
+        </div>
+      </Tarjeta>
+
+      <Tarjeta titulo="2026" acento="gris" colorTitulo="negro">
+        <div class="card-content">
+          <p>
+            Los exámenes de la edición 2026 estarán disponibles una vez
+            concluido el proceso selectivo.
+          </p>
+          <Etiqueta colorFondo="gris" colorTexto="negro">Próximamente</Etiqueta>
+        </div>
+      </Tarjeta>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    justify-content: center;
+    padding-top: 1.5rem;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 300px;
+  }
+
+  .botones {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>
